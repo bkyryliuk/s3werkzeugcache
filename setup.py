@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.1.0.0'
+version = '0.1.0.1'
 
 setup(
     name='s3werkzeugcache',
@@ -11,9 +11,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'boto3==1.4.4',
-        'flask-cache==0.13.1',
-        'werkzeug==0.11.15',
+        'boto3',
+        'flask-cache',
+        'werkzeug',
     ],
     author='Bogdan Kyryliuk',
     author_email='b.kyryliuk@gmail.com',
