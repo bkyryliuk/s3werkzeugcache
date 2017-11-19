@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.1.0.1'
+version = '0.1.0.2'
 
 setup(
     name='s3werkzeugcache',
@@ -17,7 +17,7 @@ setup(
     ],
     author='Bogdan Kyryliuk',
     author_email='b.kyryliuk@gmail.com',
-    url='https://git.musta.ch/bogdan-kyryliuk/s3cache',
+    url='https://github.com/bkyryliuk/s3werkzeugcache',
     download_url=(
         'https://github.com/bogdan-kyryliuk/s3cache/tarball/' + version),
     classifiers=[

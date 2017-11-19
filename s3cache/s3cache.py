@@ -29,16 +29,24 @@ class S3Cache(BaseCache):
     Timeout parameters are ignored as S3 doesn't support key-level expiration.
     To expire keys, set up an expiration policy as described in
     https://aws.amazon.com/blogs/aws/amazon-s3-object-expiration/.
+
+    get_extra_args, put_extra_args, and head_extra_args can be used to provide additional arguments to
+    underlying boto3 s3 client.
+    See: http://boto3.readthedocs.io/en/latest/reference/services/s3.html for more details
     """
 
     def __init__(
-            self, s3_bucket, key_prefix, default_timeout=300):
+            self, s3_bucket, key_prefix, default_timeout=300, get_extra_args={}, put_extra_args={}, head_extra_args={}):
         self.default_timeout = default_timeout
 
         self.s3_client = boto3.client('s3')
 
         self.bucket = s3_bucket
         self.key_prefix = key_prefix
+        self.get_extra_args = get_extra_args
+        self.put_extra_args = put_extra_args
+        self.head_extra_args = head_extra_args
+
 
     def get(self, key):
         """Look up key in the cache and return the value for it.
@@ -55,7 +63,8 @@ class S3Cache(BaseCache):
                 self.s3_client.download_fileobj(
                     self.bucket,
                     self._full_s3_key(key),
-                    value_file
+                    value_file,
+                    ExtraArgs=self.get_extra_args
                 )
             except Exception as e:
                 logging.warn('Error while trying to get key %s', key)
@@ -118,7 +127,8 @@ class S3Cache(BaseCache):
             self.s3_client.upload_fileobj(
                 value_file,
                 self.bucket,
-                self._full_s3_key(key)
+                self._full_s3_key(key),
+                ExtraArgs=self.put_extra_args
             )
         except Exception as e:
             logging.warn('Error while trying to set key %s', key)
@@ -163,7 +173,8 @@ class S3Cache(BaseCache):
         try:
             self.s3_client.head_object(
                 Bucket=self.bucket,
-                Key=self._full_s3_key(key)
+                Key=self._full_s3_key(key),
+                **self.head_extra_args
             )
         except Exception:
             # head_object throws an exception when object doesn't exist
