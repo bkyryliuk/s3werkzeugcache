@@ -12,7 +12,6 @@ setup(
     zip_safe=False,
     install_requires=[
         'boto3',
-        'flask-cache',
         'werkzeug',
     ],
     author='Bogdan Kyryliuk',
