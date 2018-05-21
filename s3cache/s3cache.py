@@ -1,6 +1,6 @@
 """Results backends are used to store long-running query results
 
-The Abstraction is flask-cache, which uses the BaseCache class from werkzeug
+The Abstraction is flask-caching, which uses the BaseCache class from werkzeug
 """
 from __future__ import absolute_import
 from __future__ import division
