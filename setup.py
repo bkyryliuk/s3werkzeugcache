@@ -12,7 +12,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'boto3',
-        'werkzeug',
+        'cachelib',
     ],
     author='Bogdan Kyryliuk',
     author_email='b.kyryliuk@gmail.com',
