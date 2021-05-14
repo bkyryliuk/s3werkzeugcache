@@ -42,11 +42,18 @@ class S3Cache(BaseCache):
         self.s3_client = boto3.client('s3')
 
         self.bucket = s3_bucket
-        self.key_prefix = key_prefix
+        self._key_prefix = key_prefix
         self.get_extra_args = get_extra_args
         self.put_extra_args = put_extra_args
         self.head_extra_args = head_extra_args
 
+    @property
+    def key_prefix(self):
+        return (
+            self._key_prefix
+            if not hasattr(self._key_prefix, "__call__")
+            else self._key_prefix()
+        )
 
     def get(self, key):
         """Look up key in the cache and return the value for it.
